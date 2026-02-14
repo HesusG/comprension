@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Qué es la Comprensión? — 2,400 años de pensamiento</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F5F0E8;
+  --fg: #1a1a1a;
+  --bg-alt: #EDE8DD;
+  --border: 4px solid #1a1a1a;
+  --border-thick: 6px solid #1a1a1a;
+  --shadow: 8px 8px 0 #1a1a1a;
+  --shadow-sm: 4px 4px 0 #1a1a1a;
+  --shadow-lg: 12px 12px 0 #1a1a1a;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --c1: #C62828; --c2: #E65100; --c3: #2E7D32;
+  --c4: #1565C0; --c5: #6A1B9A; --c6: #00838F;
+  --c7: #EF6C00; --c8: #AD1457; --c9: #283593;
+  --c10: #4E342E;
+  --yellow: #FFD54F;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--fg); overflow-x: hidden; line-height: 1.75; }
+a { color: inherit; }
+::selection { background: var(--yellow); color: var(--fg); }
+
+/* ── progress ── */
+#progress { position: fixed; top: 0; left: 0; height: 5px; background: var(--fg); z-index: 10000; width: 0%; }
+
+/* ── timeline nav ── */
+#tlnav { position: fixed; left: 20px; top: 50%; transform: translateY(-50%); z-index: 999; display: flex; flex-direction: column; gap: 0; }
+.tl-line { width: 2px; height: 16px; background: rgba(0,0,0,0.1); margin: 0 auto; }
+.tl-dot { width: 14px; height: 14px; border: 3px solid rgba(0,0,0,0.2); background: var(--bg); cursor: pointer; transition: all 0.4s var(--ease); position: relative; }
+.tl-dot:hover { border-color: var(--fg); transform: scale(1.4); }
+.tl-dot.active { background: var(--fg); border-color: var(--fg); transform: scale(1.3); }
+.tl-dot[data-tip]:hover::after { content: attr(data-tip); position: absolute; left: 24px; top: 50%; transform: translateY(-50%); background: var(--fg); color: var(--bg); font-family: var(--font-mono); font-size: 11px; padding: 3px 9px; white-space: nowrap; pointer-events: none; }
+@media (max-width: 900px) { #tlnav { display: none; } }
+
+/* ── ornaments ── */
+.orn { position: fixed; pointer-events: none; z-index: 1; opacity: 0.035; }
+.orn-c { width: 280px; height: 280px; border: 8px solid var(--fg); border-radius: 50%; top: 8%; right: -70px; }
+.orn-x { width: 180px; height: 180px; bottom: 12%; left: -50px; }
+.orn-x::before, .orn-x::after { content: ''; position: absolute; background: var(--fg); }
+.orn-x::before { width: 100%; height: 18px; top: 50%; transform: translateY(-50%); }
+.orn-x::after { width: 18px; height: 100%; left: 50%; transform: translateX(-50%); }
+.orn-sq { width: 160px; height: 160px; border: 8px solid var(--fg); top: 55%; right: 4%; transform: rotate(15deg); }
+.orn-d { width: 140px; height: 140px; top: 30%; left: 2%; background-image: radial-gradient(circle, var(--fg) 2.5px, transparent 2.5px); background-size: 18px 18px; }
+
+/* ══════════ HERO ══════════ */
+#hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 60px 24px; text-align: center; position: relative; overflow: hidden; }
+.hero-glyph { position: absolute; font-family: var(--font-display); font-size: clamp(260px, 42vw, 600px); font-weight: 800; color: transparent; -webkit-text-stroke: 3px rgba(0,0,0,0.04); top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; user-select: none; line-height: 1; }
+.hero-badge { font-family: var(--font-mono); font-size: 12px; font-weight: 700; background: var(--yellow); color: var(--fg); padding: 6px 18px; border: var(--border); box-shadow: var(--shadow-sm); display: inline-block; margin-bottom: 36px; letter-spacing: 2px; text-transform: uppercase; animation: slideD 0.8s var(--ease) both; }
+@keyframes slideD { from { opacity: 0; transform: translateY(-30px); } }
+.hero-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(3rem, 8vw, 6.5rem); line-height: 1.02; max-width: 900px; margin-bottom: 28px; animation: fadeU 1s 0.2s var(--ease) both; }
+.hero-title .hl { background: linear-gradient(180deg, transparent 52%, var(--yellow) 52%); padding: 0 8px; }
+@keyframes fadeU { from { opacity: 0; transform: translateY(40px); } }
+.hero-sub { font-size: clamp(1.05rem, 2vw, 1.3rem); max-width: 580px; color: #666; font-style: italic; margin-bottom: 20px; animation: fadeU 1s 0.4s var(--ease) both; }
+.hero-intro { font-size: clamp(0.95rem, 1.5vw, 1.05rem); max-width: 520px; color: #777; margin-bottom: 56px; animation: fadeU 1s 0.5s var(--ease) both; }
+.hero-arrow { width: 54px; height: 54px; border: var(--border); display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; background: var(--bg); box-shadow: var(--shadow-sm); text-decoration: none; color: var(--fg); animation: fadeU 1s 0.6s var(--ease) both, bounce 2.5s 2s infinite; }
+.hero-arrow:hover { transform: translateY(4px); box-shadow: 2px 2px 0 var(--fg); }
+@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+
+/* ══════════ SECTIONS ══════════ */
+.sec { padding: 100px 24px; position: relative; display: flex; justify-content: center; }
+.sec:nth-child(even of .sec) { background: var(--bg-alt); }
+.sec-in { max-width: 760px; width: 100%; position: relative; z-index: 5; }
+.sec[data-n]::before { content: attr(data-n); position: absolute; font-family: var(--font-display); font-size: clamp(160px, 26vw, 360px); font-weight: 800; opacity: 0.03; pointer-events: none; user-select: none; top: 50px; right: -2%; line-height: 1; }
+
+/* reveal */
+.rv { opacity: 0; transform: translateY(50px); transition: all 0.9s var(--ease); }
+.rv.vis { opacity: 1; transform: translateY(0); }
+.rv-d1 { transition-delay: 0.1s; } .rv-d2 { transition-delay: 0.2s; } .rv-d3 { transition-delay: 0.35s; } .rv-d4 { transition-delay: 0.5s; }
+
+/* header */
+.s-era { font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 4px 14px; border: 3px solid currentColor; display: inline-block; margin-bottom: 14px; }
+.s-name { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.2rem, 5.5vw, 3.4rem); line-height: 1.08; margin-bottom: 10px; }
+.s-thesis { font-size: clamp(1.05rem, 2vw, 1.25rem); color: #555; font-style: italic; line-height: 1.5; margin-bottom: 28px; }
+
+/* body */
+.s-body p { margin-bottom: 16px; font-size: 1.05rem; }
+
+/* reveal box */
+.rb { border: var(--border); background: #fff; box-shadow: var(--shadow); margin-bottom: 20px; overflow: hidden; transition: box-shadow 0.3s; }
+.rb:hover { box-shadow: 10px 10px 0 var(--fg); }
+.rb-h { padding: 16px 20px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px; font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; user-select: none; transition: background 0.3s; }
+.rb-h:hover { background: #f5f0e5; }
+.rb-i { width: 28px; height: 28px; border: 2px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; transition: transform 0.4s var(--ease); font-family: var(--font-mono); }
+.rb.open .rb-i { transform: rotate(180deg); }
+.rb-b { max-height: 0; overflow: hidden; padding: 0 20px; transition: max-height 0.6s var(--ease), padding 0.4s; }
+.rb.open .rb-b { max-height: 800px; padding: 0 20px 20px; }
+.rb-b p { font-size: 0.95rem; margin-bottom: 12px; line-height: 1.7; }
+.rb-b ul { padding-left: 0; list-style: none; margin-bottom: 12px; }
+.rb-b li { font-size: 0.95rem; margin-bottom: 10px; padding-left: 20px; position: relative; line-height: 1.6; }
+.rb-b li::before { content: '—'; position: absolute; left: 0; font-weight: 700; }
+
+/* takeaway */
+.tk { border-left: 6px solid currentColor; padding: 20px 24px; background: #fff; margin-top: 28px; margin-bottom: 20px; }
+.tk-l { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.tk p { font-size: 1rem; font-weight: 500; line-height: 1.6; }
+
+/* links */
+.s-lk { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+.s-lk a { font-family: var(--font-mono); font-size: 11px; padding: 5px 12px; border: 2px solid var(--fg); text-decoration: none; background: var(--bg); transition: all 0.25s var(--ease); display: inline-block; }
+.s-lk a:hover { background: var(--fg); color: var(--bg); transform: translate(-2px, -2px); box-shadow: var(--shadow-sm); }
+
+/* divider */
+.dv { display: flex; align-items: center; justify-content: center; padding: 10px 0; }
+.dv-l { width: 80px; height: 6px; background: var(--fg); }
+
+/* ══════════ SYNTHESIS ══════════ */
+#sint { padding: 100px 24px; }
+.sint-in { max-width: 900px; width: 100%; margin: 0 auto; }
+.sint-t { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.2rem, 5vw, 3.2rem); margin-bottom: 10px; }
+.sint-s { color: #555; font-style: italic; margin-bottom: 48px; font-size: 1.1rem; }
+.pg { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 56px; }
+.pc { border: var(--border); background: #fff; padding: 24px; box-shadow: var(--shadow-sm); opacity: 0; transform: translateY(35px); transition: all 0.7s var(--ease); }
+.pc.vis { opacity: 1; transform: translateY(0); }
+.pc:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.pc-n { font-family: var(--font-display); font-weight: 800; font-size: 2.8rem; line-height: 1; opacity: 0.12; margin-bottom: 6px; }
+.pc-t { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; margin-bottom: 8px; }
+.pc-d { font-size: 0.9rem; color: #444; line-height: 1.6; }
+.pc-w { font-family: var(--font-mono); font-size: 10px; margin-top: 12px; color: #999; letter-spacing: 1px; }
+
+/* closing */
+.closing { border: var(--border-thick); background: var(--fg); color: var(--bg); padding: 48px 36px; max-width: 900px; margin: 0 auto; box-shadow: 14px 14px 0 var(--yellow); }
+.closing p { font-size: clamp(1rem, 2vw, 1.15rem); line-height: 1.85; }
+
+/* footer */
+footer { text-align: center; padding: 48px 24px; font-family: var(--font-mono); font-size: 12px; color: #999; border-top: 2px solid rgba(0,0,0,0.08); }
+
+@media (max-width: 600px) {
+  .sec { padding: 70px 16px; }
+  .rb-h { font-size: 0.88rem; padding: 14px 16px; }
+  .closing { padding: 32px 20px; margin: 0 16px; box-shadow: 8px 8px 0 var(--yellow); }
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<nav id="tlnav"></nav>
+<div class="orn orn-c" data-speed="0.02"></div>
+<div class="orn orn-x" data-speed="-0.015"></div>
+<div class="orn orn-sq" data-speed="0.025"></div>
+<div class="orn orn-d" data-speed="-0.02"></div>
+
+<section id="hero">
+  <div class="hero-glyph" data-speed="-0.08">?</div>
+  <div class="hero-badge">2,400 años · 10 pensadores · 1 pregunta</div>
+  <h1 class="hero-title">¿Qué es la <span class="hl">Comprensión</span>?</h1>
+  <p class="hero-sub">Cada época intentó definirla; cada definición amplía la anterior sin reemplazarla.</p>
+  <p class="hero-intro">Lo que sigue es el recorrido completo — de Platón a Bruner — contado para descubrir idea por idea.</p>
+  <a href="#s1" class="hero-arrow" aria-label="Comenzar">↓</a>
+</section>
+
+<!-- 1 · PLATÓN -->
+<section class="sec" id="s1" data-n="01">
+<div class="sec-in">
+  <div class="rv"><span class="s-era" style="color:var(--c1)">c. 428 – 348 a.C.</span><h2 class="s-name" style="color:var(--c1)">Platón</h2><p class="s-thesis">Comprender NO es opinar correctamente.</p></div>
+  <div class="s-body rv rv-d1"><p>Platón fue el primero en trazar la línea. Distinguió entre <em>doxa</em> (opinión) y <em>episteme</em> (conocimiento genuino). La diferencia es brutal: un jurado puede llegar al veredicto correcto por persuasión emocional sin entender <em>por qué</em> el acusado es culpable. Tiene razón, pero no comprende.</p></div>
+  <div class="rb rv rv-d2"><div class="rb-h" onclick="tgl(this)"><span>La alegoría de la caverna</span><span class="rb-i">↓</span></div><div class="rb-b"><p>Los prisioneros ven sombras en la pared y creen que eso es la realidad. Comprender es el proceso doloroso de salir de la caverna — abandonar certezas falsas, enfrentar la luz, reorganizar toda la visión del mundo.</p><p>No es agregar datos a lo que ya sabes; es <strong>transformar cómo ves</strong>.</p></div></div>
+  <div class="rb rv rv-d3"><div class="rb-h" onclick="tgl(this)"><span>La línea dividida: niveles de comprensión</span><span class="rb-i">↓</span></div><div class="rb-b"><p>La comprensión es jerárquica. Va de la <em>eikasia</em> (imaginación) a la <em>noesis</em> (intuición de los primeros principios). No se salta de la ignorancia al conocimiento de un salto — hay niveles intermedios, y cada uno requiere esfuerzo.</p></div></div>
+  <div class="tk rv rv-d4" style="border-color:var(--c1)"><div class="tk-l" style="color:var(--c1)">Lo que queda</div><p>Comprender no es tener la respuesta correcta. Es saber <em>por qué</em> es correcta, y ese saber transforma a quien lo alcanza.</p></div>
+  <div class="s-lk rv rv-d4"><a href="https://es.wikipedia.org/wiki/Plat%C3%B3n" target="_blank">Platón</a><a href="https://es.wikipedia.org/wiki/Alegor%C3%ADa_de_la_caverna" target="_blank">Alegoría de la caverna</a><a href="https://es.wikipedia.org/wiki/Doxa" target="_blank">Doxa vs Episteme</a><a href="https://es.wikipedia.org/wiki/Analog%C3%ADa_de_la_l%C3%ADnea_dividida" target="_blank">Línea dividida</a></div>
+</div></section>
+<div class="dv"><div class="dv-l"></div></div>
+
+<!-- 2 · ARISTÓTELES -->
+<section class="sec" id="s2" data-n="02">
+<div class="sec-in">
+  <div class="rv"><span class="s-era" style="color:var(--c2)">384 – 322 a.C.</span><h2 class="s-name" style="color:var(--c2)">Aristóteles</h2><p class="s-thesis">Comprender es conocer las causas.</p></div>
+  <div class="s-body rv rv-d1"><p>Aristóteles tomó la pregunta de su maestro y la aterrizó. Comprender algo es poder responder <em>por qué es como es</em> — conocer sus cuatro causas: de qué está hecho (material), qué forma tiene (formal), quién lo produjo (eficiente) y para qué existe (final).</p><p>El médico que sabe que la miel cura heridas tiene experiencia. El que sabe <em>por qué</em> la miel tiene propiedades antibacterianas tiene comprensión.</p></div>
+  <div class="rb rv rv-d2"><div class="rb-h" onclick="tgl(this)"><span>Tres tipos de saber: Episteme, Techne, Phronesis</span><span class="rb-i">↓</span></div><div class="rb-b"><ul><li><strong>Episteme</strong> — saber teórico. Conocer lo que no puede ser de otra manera. Las matemáticas, la física.</li><li><strong>Techne</strong> — saber técnico. Saber cómo hacer algo y por qué se hace así. La medicina, la arquitectura, la programación.</li><li><strong>Phronesis</strong> — sabiduría práctica. Saber qué hacer en <em>esta</em> situación concreta, con <em>estas</em> personas. No se codifica en reglas — requiere juicio, experiencia, madurez.</li></ul><p>Un docente que solo tiene episteme pero no tiene phronesis — que sabe la teoría pero no sabe leer al grupo, ajustar sobre la marcha — no comprende realmente la enseñanza.</p></div></div>
+  <div class="tk rv rv-d3" style="border-color:var(--c2)"><div class="tk-l" style="color:var(--c2)">Lo que queda</div><p>Comprender es conocer causas, y hay diferentes tipos de comprensión para diferentes tipos de situaciones.</p></div>
+  <div class="s-lk rv rv-d3"><a href="https://es.wikipedia.org/wiki/Arist%C3%B3teles" target="_blank">Aristóteles</a><a href="https://es.wikipedia.org/wiki/Cuatro_causas" target="_blank">Las cuatro causas</a><a href="https://es.wikipedia.org/wiki/Phronesis" target="_blank">Phronesis</a><a href="https://es.wikipedia.org/wiki/%C3%89tica_nicom%C3%A1quea" target="_blank">Ética Nicomáquea</a></div>
+</div></section>
+<div class="dv"><div class="dv-l"></div></div>
+
+<!-- 3 · BACON -->
+<section class="sec" id="s3" data-n="03">
+<div class="sec-in">
+  <div class="rv"><span class="s-era" style="color:var(--c3)">1561 – 1626</span><h2 class="s-name" style="color:var(--c3)">Francis Bacon</h2><p class="s-thesis">Comprender requiere limpiar la mente.</p></div>
+  <div class="s-body rv rv-d1"><p>Bacon cambió el ángulo: antes de preguntar <em>qué</em> es comprender, preguntó <em>qué nos impide</em> comprender. Su respuesta son los cuatro ídolos — sesgos sistemáticos que distorsionan el entendimiento.</p></div>
+  <div class="rb rv rv-d2"><div class="rb-h" onclick="tgl(this)"><span>Los cuatro ídolos</span><span class="rb-i">↓</span></div><div class="rb-b"><ul><li><strong>De la Tribu</strong> — sesgos inherentes a ser humano. Vemos patrones donde hay azar, buscamos confirmación de lo que ya creemos.</li><li><strong>De la Caverna</strong> — sesgos individuales. Tu educación y temperamento te hacen ver todo desde un solo ángulo.</li><li><strong>Del Foro</strong> — sesgos del lenguaje. Las palabras crean entidades falsas ("destino", "calidad educativa") y generan disputas vacías.</li><li><strong>Del Teatro</strong> — sesgos doctrinales. Aceptamos teorías porque vienen de autoridades respetadas, sin examinarlas.</li></ul></div></div>
+  <div class="rb rv rv-d3"><div class="rb-h" onclick="tgl(this)"><span>"El conocimiento es poder"</span><span class="rb-i">↓</span></div><div class="rb-b"><p>No significa poder político. Significa que si realmente comprendes algo, <strong>puedes actuar sobre ello</strong>. Si solo puedes repetir información pero no hacer nada con ella, no la comprendes.</p></div></div>
+  <div class="tk rv rv-d4" style="border-color:var(--c3)"><div class="tk-l" style="color:var(--c3)">Lo que queda</div><p>La comprensión genuina exige primero metacognición — examinar tus propios sesgos. Y si tu "comprensión" no te permite hacer nada, no es comprensión.</p></div>
+  <div class="s-lk rv rv-d4"><a href="https://es.wikipedia.org/wiki/Francis_Bacon" target="_blank">Francis Bacon</a><a href="https://es.wikipedia.org/wiki/Novum_organum" target="_blank">Novum Organum</a><a href="https://es.wikipedia.org/wiki/%C3%8Ddolos_de_Francis_Bacon" target="_blank">Los cuatro ídolos</a></div>
+</div></section>
+<div class="dv"><div class="dv-l"></div></div>
+
+<!-- 4 · WITTGENSTEIN -->
+<section class="sec" id="s4" data-n="04">
+<div class="sec-in">
+  <div class="rv"><span class="s-era" style="color:var(--c4)">1889 – 1951</span><h2 class="s-name" style="color:var(--c4)">Wittgenstein</h2><p class="s-thesis">Comprender es participar en un juego de lenguaje.</p></div>
+  <div class="s-body rv rv-d1"><p>Wittgenstein demolió la idea de que hay <em>una</em> definición de comprensión. La palabra funciona de formas distintas en contextos distintos: "¿comprendiste el tema?" en un examen, "¿comprendiste la técnica?" en un taller, "te comprendo" en una conversación.</p><p>No hay una esencia única — hay una <strong>familia de capacidades</strong> relacionadas por parecidos superpuestos, como los miembros de una familia que se parecen entre sí sin que ningún rasgo sea común a todos.</p></div>
+  <div class="rb rv rv-d2"><div class="rb-h" onclick="tgl(this)"><span>Comprender es saber continuar</span><span class="rb-i">↓</span></div><div class="rb-b"><p>Comprender no es tener algo "dentro de la cabeza". Es ser capaz de seguir adelante en una práctica de una manera que la comunidad reconoce como correcta.</p><p>Si digo que "comprendo la regla de sumar 2" y sigo la serie 2, 4, 6, 8... la prueba no es un estado mental privado, sino que <strong>puedo continuar correctamente</strong>.</p><p>La comprensión tiene que manifestarse en la práctica pública. Si fuera algo puramente interno, nadie podría verificar si dos personas "comprenden" lo mismo.</p></div></div>
+  <div class="tk rv rv-d3" style="border-color:var(--c4)"><div class="tk-l" style="color:var(--c4)">Lo que queda</div><p>No hay una sola comprensión — hay múltiples. Y cualquiera de ellas se demuestra en lo que haces, no en lo que dices que sientes.</p></div>
+  <div class="s-lk rv rv-d3"><a href="https://es.wikipedia.org/wiki/Ludwig_Wittgenstein" target="_blank">Wittgenstein</a><a href="https://es.wikipedia.org/wiki/Investigaciones_filos%C3%B3ficas" target="_blank">Investigaciones filosóficas</a><a href="https://es.wikipedia.org/wiki/Juego_de_lenguaje" target="_blank">Juegos de lenguaje</a><a href="https://es.wikipedia.org/wiki/Parecido_de_familia" target="_blank">Parecido de familia</a></div>
+</div></section>
+<div class="dv"><div class="dv-l"></div></div>
+
+<!-- 5 · KANT -->
+<section class="sec" id="s5" data-n="05">
+<div class="sec-in">
+  <div class="rv"><span class="s-era" style="color:var(--c5)">1724 – 1804</span><h2 class="s-name" style="color:var(--c5)">Kant</h2><p class="s-thesis">La mente estructura la comprensión.</p></div>
+  <div class="s-body rv rv-d1"><p>Kant provocó una revolución: la mente no se adapta pasivamente al mundo — el mundo se adapta a las estructuras de la mente. Cuando vemos una manzana caer, nuestra mente automáticamente la identifica como unidad, la reconoce como sustancia, interpreta la caída como efecto de una causa.</p><p>Estas 12 categorías del entendimiento son los lentes que la mente impone sobre toda experiencia. No podemos quitarnos los lentes — estructuran todo lo que vemos.</p></div>
+  <div class="rb rv rv-d2"><div class="rb-h" onclick="tgl(this)"><span>Dos consecuencias enormes</span><span class="rb-i">↓</span></div><div class="rb-b"><p><strong>1.</strong> Nunca comprendemos "la cosa en sí" (el noúmeno). Solo comprendemos fenómenos — la realidad filtrada por nuestras categorías. Toda comprensión es parcial, mediada, perspectivada.</p><p><strong>2.</strong> Sin esquemas previos, no hay comprensión posible. Un estudiante que carece del marco conceptual para un tema no puede simplemente "absorberlo" — hay que construir primero el marco.</p><p>Traducido a pedagogía: <em>la información sin marco conceptual es inútil; el marco conceptual sin información es vacío.</em></p></div></div>
+  <div class="tk rv rv-d3" style="border-color:var(--c5)"><div class="tk-l" style="color:var(--c5)">Lo que queda</div><p>Comprender es un acto activo de construcción, no de recepción pasiva. Y siempre es comprensión <em>desde un punto de vista</em> — no existe la comprensión objetiva y pura.</p></div>
+  <div class="s-lk rv rv-d3"><a href="https://es.wikipedia.org/wiki/Immanuel_Kant" target="_blank">Kant</a><a href="https://es.wikipedia.org/wiki/Cr%C3%ADtica_de_la_raz%C3%B3n_pura" target="_blank">Crítica de la razón pura</a><a href="https://es.wikipedia.org/wiki/No%C3%BAmeno" target="_blank">Noúmeno</a><a href="https://es.wikipedia.org/wiki/Categor%C3%ADas_(Kant)" target="_blank">Categorías</a></div>
+</div></section>
+<div class="dv"><div class="dv-l"></div></div>
+
+<!-- 6 · GADAMER -->
+<section class="sec" id="s6" data-n="06">
+<div class="sec-in">
+  <div class="rv"><span class="s-era" style="color:var(--c6)">1900 – 2002</span><h2 class="s-name" style="color:var(--c6)">Gadamer</h2><p class="s-thesis">Comprender es interpretar en diálogo.</p></div>
+  <div class="s-body rv rv-d1"><p>Gadamer fue más allá de Kant: las estructuras que organizan la comprensión no son solo lógicas — son históricas, culturales y personales. Tu idioma, tu época, tus lecturas, tus experiencias. Todo eso es tu <strong>horizonte</strong>.</p></div>
+  <div class="rb rv rv-d2"><div class="rb-h" onclick="tgl(this)"><span>El círculo hermenéutico</span><span class="rb-i">↓</span></div><div class="rb-b"><p>Para entender las partes necesitas entender el todo, pero para entender el todo necesitas entender las partes. Lees un capítulo, te formas una idea del libro. Lees más, ajustas. Con la nueva idea, reinterpretas los capítulos anteriores.</p><p>Cada vuelta profundiza la comprensión. El círculo no es un defecto — es la <strong>estructura misma</strong> de toda comprensión.</p></div></div>
+  <div class="rb rv rv-d3"><div class="rb-h" onclick="tgl(this)"><span>El prejuicio como condición de posibilidad</span><span class="rb-i">↓</span></div><div class="rb-b"><p>La idea más provocadora: el prejuicio no es un obstáculo a la comprensión — es su condición de posibilidad. Sin pre-comprensiones, no podrías ni formular preguntas. La tarea no es eliminarlos (imposible) sino distinguir los productivos de los distorsionadores.</p><p>Comprender genuinamente a otro no es "ponerse en su lugar" — es <strong>fusionar horizontes</strong>: tu horizonte se amplía para incluir el del otro, creando una comprensión nueva que ninguno de los dos tenía antes.</p></div></div>
+  <div class="tk rv rv-d4" style="border-color:var(--c6)"><div class="tk-l" style="color:var(--c6)">Lo que queda</div><p>La comprensión es siempre interpretación. Siempre circular. Siempre desde un horizonte particular. Y cuando es genuina, transforma a quien comprende.</p></div>
+  <div class="s-lk rv rv-d4"><a href="https://es.wikipedia.org/wiki/Hans-Georg_Gadamer" target="_blank">Gadamer</a><a href="https://es.wikipedia.org/wiki/C%C3%ADrculo_hermen%C3%A9utico" target="_blank">Círculo hermenéutico</a><a href="https://es.wikipedia.org/wiki/Verdad_y_m%C3%A9todo" target="_blank">Verdad y método</a><a href="https://es.wikipedia.org/wiki/Hermen%C3%A9utica" target="_blank">Hermenéutica</a></div>
+</div></section>
+<div class="dv"><div class="dv-l"></div></div>
+
+<!-- 7 · DEWEY -->
+<section class="sec" id="s7" data-n="07">
+<div class="sec-in">
+  <div class="rv"><span class="s-era" style="color:var(--c7)">1859 – 1952</span><h2 class="s-name" style="color:var(--c7)">Dewey</h2><p class="s-thesis">Comprender es resolver problemas reflexivamente.</p></div>
+  <div class="s-body rv rv-d1"><p>Dewey aterrizó la filosofía en el barro: la comprensión no es contemplación, ni clasificación, ni interpretación. Es un <strong>instrumento</strong> para navegar la incertidumbre.</p></div>
+  <div class="rb rv rv-d2"><div class="rb-h" onclick="tgl(this)"><span>Las cinco fases del pensamiento genuino</span><span class="rb-i">↓</span></div><div class="rb-b"><ul><li><strong>Perplejidad</strong> — algo no cuadra, hay una dificultad real.</li><li><strong>Definición del problema</strong> — ¿qué exactamente es lo que falla?</li><li><strong>Hipótesis</strong> — podría ser A, B o C.</li><li><strong>Razonamiento</strong> — si fuera A, entonces...</li><li><strong>Verificación</strong> — probemos... ¿funcionó?</li></ul><p>Sin dificultad genuina no hay pensamiento genuino. Las actividades sin conexión con problemas reales producen <em>aprendizaje muerto</em>. Y la experiencia sola no enseña — la experiencia reflexionada sí.</p></div></div>
+  <div class="tk rv rv-d3" style="border-color:var(--c7)"><div class="tk-l" style="color:var(--c7)">Lo que queda</div><p>Comprender es saber resolver. Y la reflexión es el puente entre la experiencia y la comprensión. No aprendemos de la experiencia — aprendemos de <em>reflexionar</em> sobre la experiencia.</p></div>
+  <div class="s-lk rv rv-d3"><a href="https://es.wikipedia.org/wiki/John_Dewey" target="_blank">Dewey</a><a href="https://es.wikipedia.org/wiki/Pragmatismo" target="_blank">Pragmatismo</a><a href="https://en.wikipedia.org/wiki/How_We_Think" target="_blank">How We Think</a><a href="https://es.wikipedia.org/wiki/Aprendizaje_experiencial" target="_blank">Aprendizaje experiencial</a></div>
+</div></section>
+<div class="dv"><div class="dv-l"></div></div>
+
+<!-- 8 · PIAGET -->
+<section class="sec" id="s8" data-n="08">
+<div class="sec-in">
+  <div class="rv"><span class="s-era" style="color:var(--c8)">1896 – 1980</span><h2 class="s-name" style="color:var(--c8)">Piaget</h2><p class="s-thesis">El sujeto construye su comprensión.</p></div>
+  <div class="s-body rv rv-d1"><p>Piaget demostró empíricamente lo que Kant postuló filosóficamente: la mente no es una pizarra en blanco. Construye activamente su conocimiento a través de <strong>esquemas</strong> — patrones de acción o pensamiento que se aplican a situaciones diversas.</p></div>
+  <div class="rb rv rv-d2"><div class="rb-h" onclick="tgl(this)"><span>Asimilación, Acomodación, Equilibración</span><span class="rb-i">↓</span></div><div class="rb-b"><ul><li><strong>Asimilación</strong> — incorporar experiencia nueva en un esquema existente. Un niño que ha aprendido "perro" llama "perro" al gato (cuatro patas, pelo, se mueve).</li><li><strong>Acomodación</strong> — modificar el esquema cuando la asimilación falla. El "perro" maúlla. Hay que crear un esquema nuevo: "gato".</li><li><strong>Equilibración</strong> — el proceso dinámico que alterna entre ambos, buscando equilibrios cada vez más sofisticados.</li></ul><p>El error no es fracaso — es señal de asimilación en un esquema inadecuado. Es evidencia de pensamiento activo. El desequilibrio es lo que dispara la comprensión más profunda.</p><p>Y la comprensión tiene prerrequisitos cognitivos: un niño en etapa de operaciones concretas no puede comprender álgebra abstracta — no por falta de esfuerzo, sino porque sus estructuras mentales aún no lo permiten.</p></div></div>
+  <div class="tk rv rv-d3" style="border-color:var(--c8)"><div class="tk-l" style="color:var(--c8)">Lo que queda</div><p>El conocimiento no se transmite — se construye. El error es productivo. Y la comprensión tiene niveles que se recorren secuencialmente.</p></div>
+  <div class="s-lk rv rv-d3"><a href="https://es.wikipedia.org/wiki/Jean_Piaget" target="_blank">Piaget</a><a href="https://es.wikipedia.org/wiki/Constructivismo_(pedagog%C3%ADa)" target="_blank">Constructivismo</a><a href="https://es.wikipedia.org/wiki/Epistemolog%C3%ADa_gen%C3%A9tica" target="_blank">Epistemología genética</a><a href="https://es.wikipedia.org/wiki/Teor%C3%ADa_del_desarrollo_cognitivo_de_Piaget" target="_blank">Etapas del desarrollo</a></div>
+</div></section>
+<div class="dv"><div class="dv-l"></div></div>
+
+<!-- 9 · VYGOTSKY -->
+<section class="sec" id="s9" data-n="09">
+<div class="sec-in">
+  <div class="rv"><span class="s-era" style="color:var(--c9)">1896 – 1934</span><h2 class="s-name" style="color:var(--c9)">Vygotsky</h2><p class="s-thesis">Comprender es social antes que individual.</p></div>
+  <div class="s-body rv rv-d1"><p>Vygotsky invirtió la intuición de Piaget: el pensamiento no produce el habla — <strong>el habla produce el pensamiento</strong>. Toda función cognitiva aparece dos veces: primero entre personas (social), luego dentro del individuo (interna).</p></div>
+  <div class="rb rv rv-d2"><div class="rb-h" onclick="tgl(this)"><span>La Zona de Desarrollo Próximo</span><span class="rb-i">↓</span></div><div class="rb-b"><p>La distancia entre lo que puedo hacer solo y lo que puedo hacer con ayuda de alguien más competente. El aprendizaje real ocurre ahí — en esa zona. Lo que puedo hacer con ayuda hoy, podré hacer solo mañana.</p><p>El pensamiento adulto es habla interna — un diálogo consigo mismo que se ha interiorizado. El camino va del habla social al habla egocéntrica al habla interna (pensamiento silencioso).</p><p>Y el lenguaje no <em>describe</em> la comprensión — la <strong>constituye</strong>. Dar al estudiante el vocabulario de una disciplina no es un paso previo a la comprensión. Es parte de la comprensión misma.</p></div></div>
+  <div class="tk rv rv-d3" style="border-color:var(--c9)"><div class="tk-l" style="color:var(--c9)">Lo que queda</div><p>Primero comprendemos con otros; luego interiorizamos esa comprensión. El aula no es un obstáculo a la comprensión individual — es su condición.</p></div>
+  <div class="s-lk rv rv-d3"><a href="https://es.wikipedia.org/wiki/Lev_Vygotski" target="_blank">Vygotsky</a><a href="https://es.wikipedia.org/wiki/Zona_de_desarrollo_pr%C3%B3ximo" target="_blank">Zona de Desarrollo Próximo</a><a href="https://es.wikipedia.org/wiki/Pensamiento_y_lenguaje" target="_blank">Pensamiento y lenguaje</a></div>
+</div></section>
+<div class="dv"><div class="dv-l"></div></div>
+
+<!-- 10 · BRUNER -->
+<section class="sec" id="s10" data-n="10">
+<div class="sec-in">
+  <div class="rv"><span class="s-era" style="color:var(--c10)">1915 – 2016</span><h2 class="s-name" style="color:var(--c10)">Bruner</h2><p class="s-thesis">La comprensión se enseña en espiral.</p></div>
+  <div class="s-body rv rv-d1"><p>Bruner tradujo todo esto al diseño curricular. Su idea central: las ideas fundamentales de cualquier disciplina pueden presentarse de forma accesible a cualquier nivel y profundizarse progresivamente. No se enseña un tema una vez — <strong>se revisita en niveles de complejidad creciente</strong>. Eso es el currículo en espiral.</p></div>
+  <div class="rb rv rv-d2"><div class="rb-h" onclick="tgl(this)"><span>Tres modos de representación + andamiaje</span><span class="rb-i">↓</span></div><div class="rb-b"><ul><li><strong>Enactivo</strong> — saber haciendo (laboratorio, manipulación).</li><li><strong>Icónico</strong> — saber a través de imágenes (diagramas, mapas).</li><li><strong>Simbólico</strong> — saber a través del lenguaje y las fórmulas (lectura, debate).</li></ul><p>Un concepto comprendido en los tres modos es más resiliente que uno comprendido solo en modo simbólico.</p><p>Y el <strong>andamiaje</strong> (scaffolding) — inspirado en la ZDP de Vygotsky — es el apoyo temporal que un experto ofrece al novato. Se retira gradualmente a medida que el aprendiz gana competencia. La ZDP dice <em>dónde</em> enseñar; el andamiaje dice <em>cómo</em>.</p></div></div>
+  <div class="tk rv rv-d3" style="border-color:var(--c10)"><div class="tk-l" style="color:var(--c10)">Lo que queda</div><p>La comprensión se profundiza en cada vuelta de la espiral, se fortalece con múltiples representaciones, y se habilita con apoyo calibrado que se retira gradualmente.</p></div>
+  <div class="s-lk rv rv-d3"><a href="https://es.wikipedia.org/wiki/Jerome_Bruner" target="_blank">Bruner</a><a href="https://es.wikipedia.org/wiki/Andamiaje_(educaci%C3%B3n)" target="_blank">Andamiaje</a><a href="https://en.wikipedia.org/wiki/Spiral_approach" target="_blank">Currículo en espiral</a><a href="https://en.wikipedia.org/wiki/The_Process_of_Education" target="_blank">The Process of Education</a></div>
+</div></section>
+<div class="dv"><div class="dv-l"></div></div>
+
+<!-- SÍNTESIS -->
+<section class="sec" id="sint">
+<div class="sint-in">
+  <div class="rv"><h2 class="sint-t">Las 7 propiedades de la comprensión</h2><p class="sint-s">Integrando 2,400 años de reflexión, comprender es:</p></div>
+  <div class="pg">
+    <div class="pc"><div class="pc-n">1</div><div class="pc-t">Activo, no pasivo</div><div class="pc-d">No se recibe — se construye.</div><div class="pc-w">KANT · PIAGET · DEWEY</div></div>
+    <div class="pc"><div class="pc-n">2</div><div class="pc-t">Situado, no abstracto</div><div class="pc-d">Ocurre en contextos concretos, con problemas reales, entre personas.</div><div class="pc-w">ARISTÓTELES · DEWEY · VYGOTSKY</div></div>
+    <div class="pc"><div class="pc-n">3</div><div class="pc-t">Social, no solitario</div><div class="pc-d">Se media a través del lenguaje y la interacción. Primero comprendes con otros; luego interiorizas.</div><div class="pc-w">VYGOTSKY · GADAMER · WITTGENSTEIN</div></div>
+    <div class="pc"><div class="pc-n">4</div><div class="pc-t">Gradual, no instantáneo</div><div class="pc-d">Tiene niveles que se recorren progresivamente. No se salta de la ignorancia a la maestría.</div><div class="pc-w">PLATÓN · PIAGET · BRUNER</div></div>
+    <div class="pc"><div class="pc-n">5</div><div class="pc-t">Demostrable, no oculto</div><div class="pc-d">Se manifiesta en lo que puedes hacer con lo que sabes — explicar, aplicar, crear, resolver.</div><div class="pc-w">WITTGENSTEIN · DEWEY</div></div>
+    <div class="pc"><div class="pc-n">6</div><div class="pc-t">Transformador, no acumulativo</div><div class="pc-d">Cambia al que comprende, no solo lo que sabe. Salir de la caverna transforma al prisionero.</div><div class="pc-w">PLATÓN · GADAMER</div></div>
+    <div class="pc"><div class="pc-n">7</div><div class="pc-t">Falible, no definitivo</div><div class="pc-d">Siempre mediado por sesgos y horizontes. Siempre puede profundizarse. Nunca se llega a "la cosa en sí".</div><div class="pc-w">BACON · GADAMER · KANT</div></div>
+  </div>
+  <div class="closing rv"><p>Esa es la comprensión: no un estado mental privado, no una acumulación de datos, no una respuesta correcta en un examen. Es la capacidad activa, construida socialmente, siempre parcial y siempre profundizable, de pensar y actuar con flexibilidad a partir de lo que sabes — y de ser transformado en el proceso.</p></div>
+</div>
+</section>
+
+<footer>Hesus Garcia Cobos · 2026 · Hecho con curiosidad y café</footer>
+
+<script>
+function tgl(h){h.parentElement.classList.toggle('open')}
+const bar=document.getElementById('progress');
+const pxEls=document.querySelectorAll('[data-speed]');
+let tick=false;
+window.addEventListener('scroll',()=>{if(!tick){requestAnimationFrame(()=>{
+  const d=document.documentElement;
+  bar.style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%';
+  const sy=window.scrollY;
+  pxEls.forEach(e=>{e.style.transform=e.tagName==='DIV'&&e.classList.contains('hero-glyph')?`translate(-50%,-50%) translateY(${sy*parseFloat(e.dataset.speed)}px)`:`translateY(${sy*parseFloat(e.dataset.speed)}px)`});
+  tick=false});tick=true}});
+const rObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis')})},{threshold:0.12,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach(e=>rObs.observe(e));
+const cObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.querySelectorAll('.pc').forEach((c,i)=>setTimeout(()=>c.classList.add('vis'),i*100));cObs.unobserve(x.target)}})},{threshold:0.15});
+const pg=document.querySelector('.pg');if(pg)cObs.observe(pg);
+const secs=[{id:'hero',t:'Inicio'},{id:'s1',t:'Platón'},{id:'s2',t:'Aristóteles'},{id:'s3',t:'Bacon'},{id:'s4',t:'Wittgenstein'},{id:'s5',t:'Kant'},{id:'s6',t:'Gadamer'},{id:'s7',t:'Dewey'},{id:'s8',t:'Piaget'},{id:'s9',t:'Vygotsky'},{id:'s10',t:'Bruner'},{id:'sint',t:'Síntesis'}];
+const nav=document.getElementById('tlnav'),dots=[];
+secs.forEach((s,i)=>{if(i>0){const l=document.createElement('div');l.className='tl-line';nav.appendChild(l)}const d=document.createElement('div');d.className='tl-dot';d.setAttribute('data-tip',s.t);d.addEventListener('click',()=>document.getElementById(s.id).scrollIntoView({behavior:'smooth'}));nav.appendChild(d);dots.push(d)});
+const secEls=secs.map(s=>document.getElementById(s.id));
+const dObs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){const i=secEls.indexOf(x.target);if(i>=0)dots.forEach((d,j)=>d.classList.toggle('active',j===i))}})},{threshold:0.3});
+secEls.forEach(e=>{if(e)dObs.observe(e)});
+</script>
+</body>
+</html>
