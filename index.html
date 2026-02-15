@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¿Qué es la Comprensión? — 2,400 años de pensamiento</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;700&display=swap"
         rel="stylesheet">
@@ -58,7 +59,7 @@
 
         html {
             scroll-behavior: smooth;
-            font-size: 16px;
+            font-size: 100%;
         }
 
         body {
@@ -339,7 +340,34 @@
             .sec-visual,
             .sec:nth-child(even) .sec-grid .sec-visual {
                 order: 1;
-                min-height: 300px;
+                min-height: 250px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .sec { padding: 40px 14px; }
+            .sec-grid { gap: 24px; }
+            .sec-visual { min-height: 200px; }
+            .n-badge { font-size: 3.5rem; top: -30px; left: -10px; }
+            .auth-img { max-width: 100%; }
+            .hero-title { font-size: clamp(1.6rem, 7vw, 2.5rem) !important; }
+            .hero-sub { font-size: 0.95rem; }
+            .s-name { font-size: 1.6rem; }
+            .s-thesis { font-size: 1rem; }
+            .pg { grid-template-columns: 1fr; gap: 16px; }
+            .pc { padding: 18px; }
+            .pc-n { font-size: 1.6rem; }
+            .sint-quote { padding: 20px !important; }
+            .bonus-card { padding: 18px 14px; }
+            .bc-photo { width: 45px; height: 45px; }
+            .bc-name { font-size: 1.1rem; }
+            /* Diagramas: escalar para que quepan */
+            .diagram {
+                transform: scale(0.75);
+                transform-origin: center top;
+                position: relative;
+                bottom: auto;
+                right: auto;
             }
         }
 
@@ -518,7 +546,10 @@
             font-size: 0.75rem;
             text-decoration: none;
             border: 1px solid var(--fg);
-            padding: 4px 10px;
+            padding: 10px 14px;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
             color: var(--fg);
             transition: all 0.2s;
             background: transparent;
@@ -1245,7 +1276,7 @@
         /* ── Synthesis Cards ── */
         .pg {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
             gap: 24px;
             margin: 40px 0;
         }
@@ -1518,6 +1549,16 @@
         .rv-d1 {
             transition-delay: 0.1s;
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            html { scroll-behavior: auto; }
+        }
     </style>
 </head>
 
@@ -1553,7 +1594,7 @@
                     </p>
                 </div>
 
-                <div class="rb" onclick="tgl(this)">
+                <div class="rb" onclick="tgl(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tgl(this)}">
                     <div class="rb-h">La alegoría de la caverna <span class="rb-i">↓</span></div>
                     <div class="rb-b">
                         <p>Los prisioneros ven sombras en la pared y creen que eso es la realidad. Comprender es el
@@ -1563,7 +1604,7 @@
                     </div>
                 </div>
 
-                <div class="rb" onclick="tgl(this)">
+                <div class="rb" onclick="tgl(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tgl(this)}">
                     <div class="rb-h">La línea dividida: niveles de comprensión <span class="rb-i">↓</span></div>
                     <div class="rb-b">
                         <p>La comprensión es jerárquica. Va de la <em>eikasia</em> (imaginación) a la <em>noesis</em>
@@ -1579,18 +1620,18 @@
                 </div>
 
                 <div class="s-lk">
-                    <a href="https://es.wikipedia.org/wiki/Plat%C3%B3n" target="_blank">Platón</a>
-                    <a href="https://es.wikipedia.org/wiki/Alegor%C3%ADa_de_la_caverna" target="_blank">Alegoría de la
+                    <a href="https://es.wikipedia.org/wiki/Plat%C3%B3n" target="_blank" rel="noopener noreferrer">Platón</a>
+                    <a href="https://es.wikipedia.org/wiki/Alegor%C3%ADa_de_la_caverna" target="_blank" rel="noopener noreferrer">Alegoría de la
                         caverna</a>
-                    <a href="https://es.wikipedia.org/wiki/Doxa" target="_blank">Doxa vs Episteme</a>
+                    <a href="https://es.wikipedia.org/wiki/Doxa" target="_blank" rel="noopener noreferrer">Doxa vs Episteme</a>
                     <a href="https://es.wikipedia.org/wiki/Analog%C3%ADa_de_la_l%C3%ADnea_dividida"
-                        target="_blank">Línea dividida</a>
+                        target="_blank" rel="noopener noreferrer">Línea dividida</a>
                 </div>
             </div>
 
             <div class="sec-visual rv rv-d1">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Plato_Silanion_Musei_Capitolini_MC1377.jpg"
-                    alt="Plato" class="auth-img">
+                    alt="Plato" class="auth-img" loading="lazy" width="380" height="475">
                 <div class="diagram d-cave">
                     <h4>Eikasia → Noesis</h4>
                     <div class="d-content">
@@ -1619,7 +1660,7 @@
                         miel tiene propiedades antibacterianas tiene comprensión.</p>
                 </div>
 
-                <div class="rb" onclick="tgl(this)">
+                <div class="rb" onclick="tgl(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tgl(this)}">
                     <div class="rb-h">Tres tipos de saber: Episteme, Techne, Phronesis <span class="rb-i">↓</span></div>
                     <div class="rb-b">
                         <ul>
@@ -1643,16 +1684,16 @@
                 </div>
 
                 <div class="s-lk">
-                    <a href="https://es.wikipedia.org/wiki/Arist%C3%B3teles" target="_blank">Aristóteles</a>
-                    <a href="https://es.wikipedia.org/wiki/Cuatro_causas" target="_blank">Las 4 causas</a>
-                    <a href="https://es.wikipedia.org/wiki/Phronesis" target="_blank">Phronesis</a>
-                    <a href="https://es.wikipedia.org/wiki/%C3%89tica_nicom%C3%A1quea" target="_blank">Ética Nicomáquea</a>
+                    <a href="https://es.wikipedia.org/wiki/Arist%C3%B3teles" target="_blank" rel="noopener noreferrer">Aristóteles</a>
+                    <a href="https://es.wikipedia.org/wiki/Cuatro_causas" target="_blank" rel="noopener noreferrer">Las 4 causas</a>
+                    <a href="https://es.wikipedia.org/wiki/Phronesis" target="_blank" rel="noopener noreferrer">Phronesis</a>
+                    <a href="https://es.wikipedia.org/wiki/%C3%89tica_nicom%C3%A1quea" target="_blank" rel="noopener noreferrer">Ética Nicomáquea</a>
                 </div>
             </div>
 
             <div class="sec-visual rv rv-d1">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Aristotle_Altemps_Inv8575.jpg"
-                    alt="Aristotle" class="auth-img">
+                    alt="Aristotle" class="auth-img" loading="lazy" width="380" height="475">
                 <div class="diagram d-square">
                     <h4>4 Causas</h4>
                     <div>Material</div>
@@ -1678,7 +1719,7 @@
                         distorsionan el entendimiento.</p>
                 </div>
 
-                <div class="rb" onclick="tgl(this)">
+                <div class="rb" onclick="tgl(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tgl(this)}">
                     <div class="rb-h">Los cuatro ídolos <span class="rb-i">↓</span></div>
                     <div class="rb-b">
                         <ul>
@@ -1690,7 +1731,7 @@
                     </div>
                 </div>
 
-                <div class="rb" onclick="tgl(this)">
+                <div class="rb" onclick="tgl(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tgl(this)}">
                     <div class="rb-h">"El conocimiento es poder" <span class="rb-i">↓</span></div>
                     <div class="rb-b">
                         <p>No significa poder político. Significa que si realmente comprendes algo, <strong>puedes actuar
@@ -1705,15 +1746,15 @@
                 </div>
 
                 <div class="s-lk">
-                    <a href="https://es.wikipedia.org/wiki/Francis_Bacon" target="_blank">Francis Bacon</a>
-                    <a href="https://es.wikipedia.org/wiki/Novum_organum" target="_blank">Novum Organum</a>
-                    <a href="https://es.wikipedia.org/wiki/%C3%8Ddolos_de_Francis_Bacon" target="_blank">Los cuatro ídolos</a>
+                    <a href="https://es.wikipedia.org/wiki/Francis_Bacon" target="_blank" rel="noopener noreferrer">Francis Bacon</a>
+                    <a href="https://es.wikipedia.org/wiki/Novum_organum" target="_blank" rel="noopener noreferrer">Novum Organum</a>
+                    <a href="https://es.wikipedia.org/wiki/%C3%8Ddolos_de_Francis_Bacon" target="_blank" rel="noopener noreferrer">Los cuatro ídolos</a>
                 </div>
             </div>
 
             <div class="sec-visual rv rv-d1">
                 <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F1%2F11%2FFrancis_Bacon%252C_Viscount_St_Alban_from_NPG_(2).jpg%2F220px-Francis_Bacon%252C_Viscount_St_Alban_from_NPG_(2).jpg&f=1&nofb=1&ipt=cd6f4bcce14d5292a81e73a868bd3236b52d52e0d7528d71ee85aac53ffb635a"
-                    alt="Bacon" class="auth-img">
+                    alt="Bacon" class="auth-img" loading="lazy" width="380" height="475">
                 <div class="diagram d-idols">
                     <h4 style="grid-column: 1/-1; margin: 0;">4 ÍDolos</h4>
                     <div class="d-idol">Tribu</div>
@@ -1742,7 +1783,7 @@
                         común a todos.</p>
                 </div>
 
-                <div class="rb" onclick="tgl(this)">
+                <div class="rb" onclick="tgl(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tgl(this)}">
                     <div class="rb-h">Comprender es saber continuar <span class="rb-i">↓</span></div>
                     <div class="rb-b">
                         <p>"Ahora he comprendido", dice el alumno que capta la serie matemática. ¿Qué pasó? No se
@@ -1759,17 +1800,17 @@
                 </div>
 
                 <div class="s-lk">
-                    <a href="https://es.wikipedia.org/wiki/Ludwig_Wittgenstein" target="_blank">Wittgenstein</a>
+                    <a href="https://es.wikipedia.org/wiki/Ludwig_Wittgenstein" target="_blank" rel="noopener noreferrer">Wittgenstein</a>
                     <a href="https://es.wikipedia.org/wiki/Investigaciones_filos%C3%B3ficas"
-                        target="_blank">Investigaciones filosóficas</a>
-                    <a href="https://es.wikipedia.org/wiki/Juego_de_lenguaje" target="_blank">Juegos de lenguaje</a>
-                    <a href="https://es.wikipedia.org/wiki/Parecido_de_familia" target="_blank">Parecido de familia</a>
+                        target="_blank" rel="noopener noreferrer">Investigaciones filosóficas</a>
+                    <a href="https://es.wikipedia.org/wiki/Juego_de_lenguaje" target="_blank" rel="noopener noreferrer">Juegos de lenguaje</a>
+                    <a href="https://es.wikipedia.org/wiki/Parecido_de_familia" target="_blank" rel="noopener noreferrer">Parecido de familia</a>
                 </div>
             </div>
 
             <div class="sec-visual rv rv-d1">
                 <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%2Fid%2FOIP.lY1BEPuSQzcbnpBQAjTUygHaJ9%3Fpid%3DApi&f=1&ipt=64495331f6c46e2272a71cdde8523591e43d2062546f86b5a7985bd1a5f875b0"
-                    alt="Wittgenstein" class="auth-img">
+                    alt="Wittgenstein" class="auth-img" loading="lazy" width="380" height="475">
                 <div class="diagram d-family">
                     <h4>Parecido de familia</h4>
                     <svg class="d-family-svg" viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg">
@@ -1812,7 +1853,7 @@
                         No podemos quitarnos los lentes — estructuran todo lo que vemos.</p>
                 </div>
 
-                <div class="rb" onclick="tgl(this)">
+                <div class="rb" onclick="tgl(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tgl(this)}">
                     <div class="rb-h">Dos consecuencias enormes <span class="rb-i">↓</span></div>
                     <div class="rb-b">
                         <p>1. Nunca comprendemos "la cosa en sí" (el noúmeno). Solo comprendemos fenómenos — la realidad
@@ -1831,17 +1872,17 @@
                 </div>
 
                 <div class="s-lk">
-                    <a href="https://es.wikipedia.org/wiki/Immanuel_Kant" target="_blank">Kant</a>
-                    <a href="https://es.wikipedia.org/wiki/Cr%C3%ADtica_de_la_raz%C3%B3n_pura" target="_blank">Crítica
+                    <a href="https://es.wikipedia.org/wiki/Immanuel_Kant" target="_blank" rel="noopener noreferrer">Kant</a>
+                    <a href="https://es.wikipedia.org/wiki/Cr%C3%ADtica_de_la_raz%C3%B3n_pura" target="_blank" rel="noopener noreferrer">Crítica
                         de la razón pura</a>
-                    <a href="https://es.wikipedia.org/wiki/No%C3%BAmeno" target="_blank">Noúmeno</a>
-                    <a href="https://es.wikipedia.org/wiki/Categor%C3%ADas_(Kant)" target="_blank">Categorías</a>
+                    <a href="https://es.wikipedia.org/wiki/No%C3%BAmeno" target="_blank" rel="noopener noreferrer">Noúmeno</a>
+                    <a href="https://es.wikipedia.org/wiki/Categor%C3%ADas_(Kant)" target="_blank" rel="noopener noreferrer">Categorías</a>
                 </div>
             </div>
 
             <div class="sec-visual rv rv-d1">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/Immanuel_Kant_%28painted_portrait%29.jpg"
-                    alt="Kant" class="auth-img">
+                    alt="Kant" class="auth-img" loading="lazy" width="380" height="475">
                 <div class="diagram d-filter">
                     <h4>Filtros</h4>
                     <div class="d-filter-particles">
@@ -1881,7 +1922,7 @@
                         es tu <strong>horizonte</strong>.</p>
                 </div>
 
-                <div class="rb" onclick="tgl(this)">
+                <div class="rb" onclick="tgl(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tgl(this)}">
                     <div class="rb-h">El círculo hermenéutico <span class="rb-i">↓</span></div>
                     <div class="rb-b">
                         <p>Para entender las partes necesitas entender el todo, pero para entender el todo necesitas
@@ -1892,7 +1933,7 @@
                     </div>
                 </div>
 
-                <div class="rb" onclick="tgl(this)">
+                <div class="rb" onclick="tgl(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tgl(this)}">
                     <div class="rb-h">El prejuicio como condición de posibilidad <span class="rb-i">↓</span></div>
                     <div class="rb-b">
                         <p>La idea más provocadora: el prejuicio no es un obstáculo a la comprensión — es su condición de
@@ -1910,16 +1951,16 @@
                 </div>
 
                 <div class="s-lk">
-                    <a href="https://es.wikipedia.org/wiki/Hans-Georg_Gadamer" target="_blank">Gadamer</a>
-                    <a href="https://es.wikipedia.org/wiki/C%C3%ADrculo_hermen%C3%A9utico" target="_blank">Círculo hermenéutico</a>
-                    <a href="https://es.wikipedia.org/wiki/Verdad_y_m%C3%A9todo" target="_blank">Verdad y método</a>
-                    <a href="https://es.wikipedia.org/wiki/Hermen%C3%A9utica" target="_blank">Hermenéutica</a>
+                    <a href="https://es.wikipedia.org/wiki/Hans-Georg_Gadamer" target="_blank" rel="noopener noreferrer">Gadamer</a>
+                    <a href="https://es.wikipedia.org/wiki/C%C3%ADrculo_hermen%C3%A9utico" target="_blank" rel="noopener noreferrer">Círculo hermenéutico</a>
+                    <a href="https://es.wikipedia.org/wiki/Verdad_y_m%C3%A9todo" target="_blank" rel="noopener noreferrer">Verdad y método</a>
+                    <a href="https://es.wikipedia.org/wiki/Hermen%C3%A9utica" target="_blank" rel="noopener noreferrer">Hermenéutica</a>
                 </div>
             </div>
 
             <div class="sec-visual rv rv-d1">
                 <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2Fthumb%2F9%2F9f%2FHans-Georg_Gadamer.jpg%2F960px-Hans-Georg_Gadamer.jpg&f=1&nofb=1&ipt=be60b96c07cc6b27d4f8c76febed6347d899338d94a709f197d63de0457e18dd"
-                    alt="Gadamer" class="auth-img">
+                    alt="Gadamer" class="auth-img" loading="lazy" width="380" height="475">
                 <div class="diagram d-fusion">
                     <h4>Fusión de horizontes</h4>
                     <div class="d-fusion-circle"></div>
@@ -1944,7 +1985,7 @@
                         interpretación. Es un <strong>instrumento</strong> para navegar la incertidumbre.</p>
                 </div>
 
-                <div class="rb" onclick="tgl(this)">
+                <div class="rb" onclick="tgl(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tgl(this)}">
                     <div class="rb-h">Las cinco fases del pensamiento genuino <span class="rb-i">↓</span></div>
                     <div class="rb-b">
                         <ul>
@@ -1967,17 +2008,17 @@
                 </div>
 
                 <div class="s-lk">
-                    <a href="https://es.wikipedia.org/wiki/John_Dewey" target="_blank">Dewey</a>
-                    <a href="https://es.wikipedia.org/wiki/Pragmatismo" target="_blank">Pragmatismo</a>
-                    <a href="https://en.wikipedia.org/wiki/How_We_Think" target="_blank">How We Think</a>
-                    <a href="https://es.wikipedia.org/wiki/Aprendizaje_experiencial" target="_blank">Aprendizaje
+                    <a href="https://es.wikipedia.org/wiki/John_Dewey" target="_blank" rel="noopener noreferrer">Dewey</a>
+                    <a href="https://es.wikipedia.org/wiki/Pragmatismo" target="_blank" rel="noopener noreferrer">Pragmatismo</a>
+                    <a href="https://en.wikipedia.org/wiki/How_We_Think" target="_blank" rel="noopener noreferrer">How We Think</a>
+                    <a href="https://es.wikipedia.org/wiki/Aprendizaje_experiencial" target="_blank" rel="noopener noreferrer">Aprendizaje
                         experiencial</a>
                 </div>
             </div>
 
             <div class="sec-visual rv rv-d1">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/John_Dewey_in_1902.jpg" alt="Dewey"
-                    class="auth-img">
+                    class="auth-img" loading="lazy" width="380" height="475">
                 <div class="diagram d-phases">
                     <h4>5 Fases</h4>
                     <div class="d-phase">
@@ -2014,7 +2055,7 @@
                         acción o pensamiento que se aplican a situaciones diversas.</p>
                 </div>
 
-                <div class="rb" onclick="tgl(this)">
+                <div class="rb" onclick="tgl(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tgl(this)}">
                     <div class="rb-h">Asimilación, Acomodación, Equilibración <span class="rb-i">↓</span></div>
                     <div class="rb-b">
                         <ul>
@@ -2040,17 +2081,17 @@
                 </div>
 
                 <div class="s-lk">
-                    <a href="https://es.wikipedia.org/wiki/Jean_Piaget" target="_blank">Piaget</a>
+                    <a href="https://es.wikipedia.org/wiki/Jean_Piaget" target="_blank" rel="noopener noreferrer">Piaget</a>
                     <a href="https://es.wikipedia.org/wiki/Constructivismo_(pedagog%C3%ADa)"
-                        target="_blank">Constructivismo</a>
-                    <a href="https://es.wikipedia.org/wiki/Epistemolog%C3%ADa_gen%C3%A9tica" target="_blank">Epistemología genética</a>
-                    <a href="https://es.wikipedia.org/wiki/Teor%C3%ADa_del_desarrollo_cognitivo_de_Piaget" target="_blank">Etapas del desarrollo</a>
+                        target="_blank" rel="noopener noreferrer">Constructivismo</a>
+                    <a href="https://es.wikipedia.org/wiki/Epistemolog%C3%ADa_gen%C3%A9tica" target="_blank" rel="noopener noreferrer">Epistemología genética</a>
+                    <a href="https://es.wikipedia.org/wiki/Teor%C3%ADa_del_desarrollo_cognitivo_de_Piaget" target="_blank" rel="noopener noreferrer">Etapas del desarrollo</a>
                 </div>
             </div>
 
             <div class="sec-visual rv rv-d1">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/6/67/Jean_Piaget_in_Ann_Arbor.png" alt="Piaget"
-                    class="auth-img">
+                    class="auth-img" loading="lazy" width="380" height="475">
                 <div class="diagram d-stairs">
                     <h4>Etapas</h4>
                     <div></div>
@@ -2076,7 +2117,7 @@
                         personas (social), luego dentro del individuo (interna).</p>
                 </div>
 
-                <div class="rb" onclick="tgl(this)">
+                <div class="rb" onclick="tgl(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tgl(this)}">
                     <div class="rb-h">La Zona de Desarrollo Próximo <span class="rb-i">↓</span></div>
                     <div class="rb-b">
                         <p>La distancia entre lo que puedo hacer solo y lo que puedo hacer con ayuda de alguien más
@@ -2097,15 +2138,15 @@
                 </div>
 
                 <div class="s-lk">
-                    <a href="https://es.wikipedia.org/wiki/Lev_Vygotski" target="_blank">Vygotsky</a>
-                    <a href="https://es.wikipedia.org/wiki/Zona_de_desarrollo_pr%C3%B3ximo" target="_blank">Zona de Desarrollo Próximo</a>
-                    <a href="https://es.wikipedia.org/wiki/Pensamiento_y_lenguaje" target="_blank">Pensamiento y lenguaje</a>
+                    <a href="https://es.wikipedia.org/wiki/Lev_Vygotski" target="_blank" rel="noopener noreferrer">Vygotsky</a>
+                    <a href="https://es.wikipedia.org/wiki/Zona_de_desarrollo_pr%C3%B3ximo" target="_blank" rel="noopener noreferrer">Zona de Desarrollo Próximo</a>
+                    <a href="https://es.wikipedia.org/wiki/Pensamiento_y_lenguaje" target="_blank" rel="noopener noreferrer">Pensamiento y lenguaje</a>
                 </div>
             </div>
 
             <div class="sec-visual rv rv-d1">
                 <img src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Ftotallyhistory.com%2Fwp-content%2Fuploads%2F2014%2F01%2FLev-Vygotsky.jpg&f=1&nofb=1&ipt=8b4b8cfd6d66af843e284a552cf7c234dde5e78646ea43136a3ee69ad5383478"
-                    alt="Vygotsky" class="auth-img">
+                    alt="Vygotsky" class="auth-img" loading="lazy" width="380" height="475">
                 <div class="diagram d-zdp">
                     <h4>Zonas de Desarrollo</h4>
                     <div class="d-zdp-bar"><span>Sé solo</span></div>
@@ -2131,7 +2172,7 @@
                         es el currículo en espiral.</p>
                 </div>
 
-                <div class="rb" onclick="tgl(this)">
+                <div class="rb" onclick="tgl(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tgl(this)}">
                     <div class="rb-h">Tres modos de representación + andamiaje <span class="rb-i">↓</span></div>
                     <div class="rb-b">
                         <ul>
@@ -2154,16 +2195,16 @@
                 </div>
 
                 <div class="s-lk">
-                    <a href="https://es.wikipedia.org/wiki/Jerome_Bruner" target="_blank">Bruner</a>
-                    <a href="https://es.wikipedia.org/wiki/Andamiaje_(educaci%C3%B3n)" target="_blank">Andamiaje</a>
-                    <a href="https://en.wikipedia.org/wiki/Spiral_approach" target="_blank">Currículo en espiral</a>
-                    <a href="https://en.wikipedia.org/wiki/The_Process_of_Education" target="_blank">The Process of Education</a>
+                    <a href="https://es.wikipedia.org/wiki/Jerome_Bruner" target="_blank" rel="noopener noreferrer">Bruner</a>
+                    <a href="https://es.wikipedia.org/wiki/Andamiaje_(educaci%C3%B3n)" target="_blank" rel="noopener noreferrer">Andamiaje</a>
+                    <a href="https://en.wikipedia.org/wiki/Spiral_approach" target="_blank" rel="noopener noreferrer">Currículo en espiral</a>
+                    <a href="https://en.wikipedia.org/wiki/The_Process_of_Education" target="_blank" rel="noopener noreferrer">The Process of Education</a>
                 </div>
             </div>
 
             <div class="sec-visual rv rv-d1">
                 <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.wikia.nocookie.net%2Fupaeponline-educacionvirtual%2Fimages%2Fc%2Fc3%2FBRUNER.jpg%2Frevision%2Flatest%3Fcb%3D20200611190322%26path-prefix%3Des&f=1&nofb=1&ipt=3f144dfda5a964947abbeba8ee691474c756327121da960bce607ee688e43011"
-                    alt="Bruner" class="auth-img">
+                    alt="Bruner" class="auth-img" loading="lazy" width="380" height="475">
                 <div class="diagram d-spiral">
                     <h4>Currículo en Espiral</h4>
                     <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -2239,7 +2280,7 @@
             </div>
 
             <div class="rv sint-quote"
-                style="text-align:center; max-width:800px; margin:0 auto; padding:40px;">
+                style="text-align:center; max-width:800px; margin:0 auto; padding:30px;">
                 <p style="font-size:1.1rem; line-height:1.8">Esa es la comprensión: no un estado mental privado, no una
                     acumulación de datos, no una respuesta correcta en un examen. Es la capacidad activa, construida socialmente, siempre parcial y siempre
                     profundizable, de pensar y actuar con flexibilidad a partir de lo que sabes — y de ser transformado
@@ -2264,7 +2305,7 @@
                 <div class="bonus-card rv" style="--bc:#e91e63">
                     <div class="bc-header">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Louise_Rosenblatt.jpg"
-                            alt="Louise Rosenblatt" class="bc-photo">
+                            alt="Louise Rosenblatt" class="bc-photo" loading="lazy" width="70" height="70">
                         <div class="bc-header-text">
                             <div class="bc-name">Louise Rosenblatt</div>
                             <div class="bc-dates">1904 – 2005 · Dimensión afectiva</div>
@@ -2278,7 +2319,7 @@
                         la comprensión — es parte constitutiva de ella.
                     </div>
 
-                    <div class="rb" onclick="tgl(this)">
+                    <div class="rb" onclick="tgl(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tgl(this)}">
                         <div class="rb-h">Lectura eferente vs. estética <span class="rb-i">↓</span></div>
                         <div class="rb-b">
                             <p>Cuando lees instrucciones médicas, extraes datos (eferente). Cuando lees un poema, vives
@@ -2298,7 +2339,7 @@
                 <div class="bonus-card rv" style="--bc:#ff7043">
                     <div class="bc-header">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Nel_Noddings_2011_%28cropped%29.jpg"
-                            alt="Nel Noddings" class="bc-photo">
+                            alt="Nel Noddings" class="bc-photo" loading="lazy" width="70" height="70">
                         <div class="bc-header-text">
                             <div class="bc-name">Nel Noddings</div>
                             <div class="bc-dates">1929 – 2022 · Dimensión relacional</div>
@@ -2312,7 +2353,7 @@
                         (ver desde la perspectiva del otro). Un maestro que no cuida, no enseña.
                     </div>
 
-                    <div class="rb" onclick="tgl(this)">
+                    <div class="rb" onclick="tgl(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tgl(this)}">
                         <div class="rb-h">Engrossment y desplazamiento motivacional <span class="rb-i">↓</span></div>
                         <div class="rb-b">
                             <p>Engrossment es recibir al otro completamente. Desplazamiento motivacional es actuar desde
@@ -2332,7 +2373,7 @@
                 <div class="bonus-card rv" style="--bc:#26a69a">
                     <div class="bc-header">
                         <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Maxine-greene.jpg"
-                            alt="Maxine Greene" class="bc-photo">
+                            alt="Maxine Greene" class="bc-photo" loading="lazy" width="70" height="70">
                         <div class="bc-header-text">
                             <div class="bc-name">Maxine Greene</div>
                             <div class="bc-dates">1917 – 2014 · Dimensión imaginativa</div>
@@ -2346,7 +2387,7 @@
                         arte y la literatura. La imaginación es el motor que permite trascender lo dado.
                     </div>
 
-                    <div class="rb" onclick="tgl(this)">
+                    <div class="rb" onclick="tgl(this)" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();tgl(this)}">
                         <div class="rb-h">Wide-awakeness y la imaginación social <span class="rb-i">↓</span></div>
                         <div class="rb-b">
                             <p>Estar despierto es lo opuesto al hábito. La imaginación social es la capacidad de imaginar
@@ -2371,7 +2412,7 @@
     </footer>
 
     <script>
-        function tgl(el) { el.classList.toggle('open'); }
+        function tgl(el) { el.classList.toggle('open'); el.setAttribute('aria-expanded', el.classList.contains('open')); }
 
         // Progress Bar
         window.addEventListener('scroll', () => {
